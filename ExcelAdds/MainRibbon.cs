@@ -13,9 +13,10 @@ namespace ExcelAdds
     {
         public event System.Action ButtonReplaceClicked;
         public event System.Action ButtonSetReplacementRangeClicked;
+        public event System.Action ButtonReplaceSubStringClicked;
 
         public string TargetString { get { return txbTarget.Text; } }
-        public string Replacement { get { return txbNewText.Text; } }
+        public string Replacement { get { return txbReplacement.Text; } }
         public string SelectedRange { set { txbSelectedRange.Text = value; } }
 
         private void MainRibbon_Load(object sender, RibbonUIEventArgs e)
@@ -31,6 +32,11 @@ namespace ExcelAdds
         private void btnSetReplacementRange_Click(object sender, RibbonControlEventArgs e)
         {
             if (ButtonSetReplacementRangeClicked != null) ButtonSetReplacementRangeClicked();
+        }
+
+        private void btnReplaceSubString_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (ButtonReplaceSubStringClicked != null) ButtonReplaceSubStringClicked();
         }
 
 

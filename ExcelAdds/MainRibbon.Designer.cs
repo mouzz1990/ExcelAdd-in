@@ -36,52 +36,38 @@
         {
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.txbTarget = this.Factory.CreateRibbonEditBox();
-            this.txbNewText = this.Factory.CreateRibbonEditBox();
             this.btnReplace = this.Factory.CreateRibbonButton();
-            this.separator1 = this.Factory.CreateRibbonSeparator();
             this.txbSelectedRange = this.Factory.CreateRibbonEditBox();
             this.btnSetReplacementRange = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.txbTarget = this.Factory.CreateRibbonEditBox();
+            this.txbReplacement = this.Factory.CreateRibbonEditBox();
+            this.btnReplaceSubString = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
+            this.group2.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(this.group1);
+            this.tab1.Groups.Add(this.group2);
             this.tab1.Label = "TabAddIns";
             this.tab1.Name = "tab1";
             // 
             // group1
             // 
-            this.group1.Items.Add(this.txbTarget);
-            this.group1.Items.Add(this.txbNewText);
-            this.group1.Items.Add(this.separator1);
             this.group1.Items.Add(this.txbSelectedRange);
             this.group1.Items.Add(this.btnSetReplacementRange);
             this.group1.Items.Add(this.btnReplace);
-            this.group1.Label = "Замена части строки";
+            this.group1.Label = "Замена типа Ключ-Значение";
             this.group1.Name = "group1";
-            // 
-            // txbTarget
-            // 
-            this.txbTarget.Label = "Заменить строку:";
-            this.txbTarget.Name = "txbTarget";
-            // 
-            // txbNewText
-            // 
-            this.txbNewText.Label = "Заменить на:";
-            this.txbNewText.Name = "txbNewText";
             // 
             // btnReplace
             // 
             this.btnReplace.Label = "Заменить";
             this.btnReplace.Name = "btnReplace";
             this.btnReplace.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnReplace_Click);
-            // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
             // 
             // txbSelectedRange
             // 
@@ -94,6 +80,30 @@
             this.btnSetReplacementRange.Name = "btnSetReplacementRange";
             this.btnSetReplacementRange.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSetReplacementRange_Click);
             // 
+            // group2
+            // 
+            this.group2.Items.Add(this.txbTarget);
+            this.group2.Items.Add(this.txbReplacement);
+            this.group2.Items.Add(this.btnReplaceSubString);
+            this.group2.Label = "Замена части строки";
+            this.group2.Name = "group2";
+            // 
+            // txbTarget
+            // 
+            this.txbTarget.Label = "Заменить строку:";
+            this.txbTarget.Name = "txbTarget";
+            // 
+            // txbReplacement
+            // 
+            this.txbReplacement.Label = "Заменить на:";
+            this.txbReplacement.Name = "txbReplacement";
+            // 
+            // btnReplaceSubString
+            // 
+            this.btnReplaceSubString.Label = "Заменить";
+            this.btnReplaceSubString.Name = "btnReplaceSubString";
+            this.btnReplaceSubString.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnReplaceSubString_Click);
+            // 
             // MainRibbon
             // 
             this.Name = "MainRibbon";
@@ -104,6 +114,8 @@
             this.tab1.PerformLayout();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
+            this.group2.ResumeLayout(false);
+            this.group2.PerformLayout();
 
         }
 
@@ -111,12 +123,13 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox txbTarget;
-        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox txbNewText;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnReplace;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
         internal Microsoft.Office.Tools.Ribbon.RibbonEditBox txbSelectedRange;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSetReplacementRange;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox txbTarget;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox txbReplacement;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnReplaceSubString;
     }
 
     partial class ThisRibbonCollection

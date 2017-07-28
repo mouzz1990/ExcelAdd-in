@@ -13,5 +13,6 @@ namespace ExcelAdds
 
         event Action ButtonReplaceClicked;
         event Action ButtonSetReplacementRangeClicked;
+        event Action ButtonReplaceSubStringClicked;
     }
 }
