@@ -36,9 +36,9 @@
         {
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.btnReplace = this.Factory.CreateRibbonButton();
             this.txbSelectedRange = this.Factory.CreateRibbonEditBox();
             this.btnSetReplacementRange = this.Factory.CreateRibbonButton();
+            this.btnReplace = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.txbTarget = this.Factory.CreateRibbonEditBox();
             this.txbReplacement = this.Factory.CreateRibbonEditBox();
@@ -46,6 +46,7 @@
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
+            this.SuspendLayout();
             // 
             // tab1
             // 
@@ -63,22 +64,25 @@
             this.group1.Label = "Замена типа Ключ-Значение";
             this.group1.Name = "group1";
             // 
-            // btnReplace
-            // 
-            this.btnReplace.Label = "Заменить";
-            this.btnReplace.Name = "btnReplace";
-            this.btnReplace.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnReplace_Click);
-            // 
             // txbSelectedRange
             // 
             this.txbSelectedRange.Label = "Выбранный диапазон";
             this.txbSelectedRange.Name = "txbSelectedRange";
+            this.txbSelectedRange.SizeString = "A12:A13";
+            this.txbSelectedRange.Text = null;
             // 
             // btnSetReplacementRange
             // 
             this.btnSetReplacementRange.Label = "Дипазон замены";
             this.btnSetReplacementRange.Name = "btnSetReplacementRange";
+            this.btnSetReplacementRange.ScreenTip = "Выберете диапазон из двух столбцов \"Что заменить\" - \"На что заменить\"";
             this.btnSetReplacementRange.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSetReplacementRange_Click);
+            // 
+            // btnReplace
+            // 
+            this.btnReplace.Label = "Заменить";
+            this.btnReplace.Name = "btnReplace";
+            this.btnReplace.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnReplace_Click);
             // 
             // group2
             // 
@@ -92,11 +96,15 @@
             // 
             this.txbTarget.Label = "Заменить строку:";
             this.txbTarget.Name = "txbTarget";
+            this.txbTarget.SizeString = "ПРЕОБРАЗОВ;;";
+            this.txbTarget.Text = null;
             // 
             // txbReplacement
             // 
             this.txbReplacement.Label = "Заменить на:";
             this.txbReplacement.Name = "txbReplacement";
+            this.txbReplacement.SizeString = "ПРЕОБРАЗОВАНИЕ";
+            this.txbReplacement.Text = null;
             // 
             // btnReplaceSubString
             // 
@@ -116,6 +124,7 @@
             this.group1.PerformLayout();
             this.group2.ResumeLayout(false);
             this.group2.PerformLayout();
+            this.ResumeLayout(false);
 
         }
 

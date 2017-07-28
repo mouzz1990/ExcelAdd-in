@@ -43,13 +43,38 @@ namespace ExcelAdds
         //Замена строк
         void ribbon_ButtonReplaceSubStringClicked()
         {
+            int replaceCounter = 0;
+            int resetCounter = 0;
+
             foreach (Excel.Range c in SelectedTarget.Cells)
             {
                 string temp = c.Value;
 
+                if (temp == null)
+                {
+                    resetCounter++;
+
+                    if (resetCounter >= 1000) break;
+
+                    continue;
+                }
+
                 if (temp.Contains(ribbon.TargetString))
+                {
+                    resetCounter = 0;
+                    replaceCounter++;
+
                     c.Value = ReplaceString(temp, ribbon.TargetString, ribbon.Replacement);
+                }
             }
+            MessageBox.Show(string.Format("Операция успешна!{0}{0}Произведено замен: {1}",
+                            Environment.NewLine,
+                            replaceCounter
+                            ),
+                            "Замена завершена успешно!",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                            );
         }
 
         //создание словаря для замены
@@ -58,6 +83,7 @@ namespace ExcelAdds
             ribbon.SelectedRange = SelectedTarget.Address.Replace("$","");
 
             ReplacementDictionary = new Dictionary<string, string>();
+            int counterReplace = 0;
 
             foreach (Excel.Range row in SelectedTarget.Rows)
             {
@@ -68,14 +94,40 @@ namespace ExcelAdds
         //Замена указанного диапазона созданными значениями словаря
         private void ribbon_ButtonReplaceClicked()
         {
+            int resetCounter = 0;
+            int counterReplace = 0;
+
             foreach (Excel.Range c in SelectedTarget.Cells)
             {
+                if (c.Value == null)
+                {
+                    resetCounter++;
+
+                    if (resetCounter >= 1000)  break;
+
+                    continue;
+                }
+
                 foreach (var key in ReplacementDictionary.Keys)
                 {
+                    resetCounter = 0;
+
                     if (c.Value == key)
+                    {
                         c.Value = ReplacementDictionary[key];
+                        counterReplace++;
+                    }
                 }
             }
+
+            MessageBox.Show(string.Format("Операция успешна!{0}{0}Произведено замен: {1}",
+                            Environment.NewLine,
+                            counterReplace
+                            ),
+                            "Замена завершена успешно!",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                            );
         }
 
         //метод замены строки
@@ -102,9 +154,7 @@ namespace ExcelAdds
         {
             SelectedTarget = Target;
         }
-
-
-
+        
         #region VSTO generated code
 
         /// <summary>
