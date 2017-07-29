@@ -14,20 +14,32 @@ namespace ExcelAdds
     public partial class ThisAddIn
     {
         //глобальные переменные
+        Excel.Application eApp;
         Excel.Worksheet wSheet;
         Excel.Range SelectedTarget;
         IMainRibbonView ribbon;
         Dictionary<string, string> ReplacementDictionary;
 
+        //Запуск
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            wSheet = Application.ActiveWorkbook.ActiveSheet;
-            wSheet.SelectionChange += new Excel.DocEvents_SelectionChangeEventHandler(wSheet_SelectionChange);
+            eApp = Application;
+            eApp.ActiveWorkbook.SheetSelectionChange += ActiveWorkbook_SheetSelectionChange;
         }
 
+        //Остановка
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
-            wSheet.SelectionChange -= new Excel.DocEvents_SelectionChangeEventHandler(wSheet_SelectionChange);
+            
+        }
+
+        //Выделение ячеек и запись ренжа согласно выделенного листа
+        private void ActiveWorkbook_SheetSelectionChange(object Sh, Excel.Range Target)
+        {
+            eApp.ActiveWorkbook.SheetSelectionChange -= ActiveWorkbook_SheetSelectionChange;
+            wSheet = (Excel.Worksheet)Sh;
+            SelectedTarget = Target;
+            eApp.ActiveWorkbook.SheetSelectionChange += ActiveWorkbook_SheetSelectionChange;
         }
 
         //создание ленты
@@ -77,18 +89,21 @@ namespace ExcelAdds
                             );
         }
 
-        //создание словаря для замены
+        //создание словаря для замены из выбранного диапазона 2-х столбцов
         void ribbon_ButtonSetReplacementRangeClicked()
         {
-            ribbon.SelectedRange = SelectedTarget.Address.Replace("$","");
+            ribbon.SelectedRange = SelectedTarget.Address.Replace("$", "");
 
             ReplacementDictionary = new Dictionary<string, string>();
-            int counterReplace = 0;
 
             foreach (Excel.Range row in SelectedTarget.Rows)
             {
+                if (row.Cells[1].Value == null) continue;
+                if (ReplacementDictionary.ContainsKey(row.Cells[1].Value)) continue;
+
                 ReplacementDictionary.Add(row.Cells[1].Value, row.Cells[2].Value);
             }
+
         }
 
         //Замена указанного диапазона созданными значениями словаря
@@ -130,7 +145,7 @@ namespace ExcelAdds
                             );
         }
 
-        //метод замены строки
+        //Метод замены строки
         string ReplaceString(string input, string find, string replace)
         {
             int startIndex = input.IndexOf(find);
@@ -147,12 +162,6 @@ namespace ExcelAdds
                 sb.Append(input[i]);
 
             return sb.ToString();
-        }
-
-        //получение выделенного рэнжа
-        void wSheet_SelectionChange(Excel.Range Target)
-        {
-            SelectedTarget = Target;
         }
         
         #region VSTO generated code
